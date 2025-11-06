@@ -1,4 +1,5 @@
 FPGA-Based Morse Code Decoder
+
 This project is a real-time Morse code decoder implemented in Verilog for the Tang Nano 9K FPGA. It features an analog signal conditioning front-end to ensure clean, noise-free input from a standard push button. The FPGA decodes Morse timings (dots, dashes, and gaps) and transmits the corresponding ASCII characters to a computer via UART.
 
 
@@ -9,6 +10,7 @@ This system was developed as part of the BECE102L – Digital System Design cour
 
 
 📋 Project Overview
+
 The system is split into two main parts:
 
 
@@ -173,5 +175,6 @@ Function Buttons (from top.v)
 Manual Space: Press btn_space (Button 3) while Button 4 is not pressed.
 
 Manual Newline: Press btn_newline (Button 4) while Button 3 is not pressed.
+
 
 Backspace (Destructive): Hold btn_space (Button 3), then press btn_newline (Button 4).
