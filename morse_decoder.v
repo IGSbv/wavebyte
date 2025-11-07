@@ -1,36 +1,13 @@
-// morse_decoder.v
 module morse_decoder(
-    input [11:0] symbol_data,  // Data from buffer
-    input [2:0]  symbol_count, // Length of data
+    input [11:0] symbol_data, 
+    input [2:0]  symbol_count, 
     
-    output reg [7:0] ascii_out   // 8-bit ASCII
+    output reg [7:0] ascii_out
 );
-
-    // We create a single 15-bit value for the case statement
-    // 3-bits for count, 12-bits for data.
     wire [14:0] lookup_key = {symbol_count, symbol_data};
 
     always @(*) begin
         case (lookup_key)
-            // Format: {count, data}
-            // Data is {sym6, sym5, sym4, sym3, sym2, sym1}
-            // 'A' (.-) = 2 symbols, {DASH, DOT} = {2'b10, 2'b01}
-            // Key = {3'd2, 10'b0, 2'b10, 2'b01} = 15'b010_00000000_1001
-            // Let's re-do the buffer to make this easier...
-            // Ok, the buffer shifts left. So sym1 is MSB.
-            // A (.-) = {DOT, DASH} = {01, 10}
-            // Key = {3'd2, 2'b01, 2'b10, 8'b0} = 15'b010_011000000000
-
-            // Re-thinking: The buffer logic is {sym_N...sym2, sym1}
-            // 'A' (.-) -> 1st: new_dot -> {0, 01} -> count=1
-            //            2nd: new_dash-> {01, 10} -> count=2
-            // So data = 0...0110. Key = {3'd2, 8'b0, 4'b0110}
-            // This is better.
-
-            // Format: {3'bCOUNT, 12'b_DATA_}
-            // (Data is LSB-aligned)
-            
-            // Letters
             {3'd2, 12'b000000000110}: ascii_out = "A"; // .-
             {3'd4, 12'b000010010101}: ascii_out = "B"; // -...
             {3'd4, 12'b000010011001}: ascii_out = "C"; // -.-.
@@ -57,8 +34,8 @@ module morse_decoder(
             {3'd4, 12'b000010010110}: ascii_out = "X"; // -..-
             {3'd4, 12'b000010011010}: ascii_out = "Y"; // -.--
             {3'd4, 12'b000010100101}: ascii_out = "Z"; // --..
+
             
-            // Numbers
             {3'd5, 12'b001010101010}: ascii_out = "0"; // -----
             {3'd5, 12'b000110101010}: ascii_out = "1"; // .----
             {3'd5, 12'b000101101010}: ascii_out = "2"; // ..---
@@ -70,8 +47,9 @@ module morse_decoder(
             {3'd5, 12'b001010100101}: ascii_out = "8"; // ---..
             {3'd5, 12'b001010101001}: ascii_out = "9"; // ----.
             
-            default: ascii_out = "?"; // Unknown symbol
+            default: ascii_out = "?"; 
         endcase
     end
     
+
 endmodule
