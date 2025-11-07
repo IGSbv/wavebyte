@@ -1,10 +1,9 @@
-// top.v
 module top(
-    input clk,         // 27MHz clock
-    input morse_in,    // Clean, debounced input from your MCP6004
-    input btn_space,   // Bouncy input from Pin 3
-    input btn_newline, // Bouncy input from Pin 4
-    output tx_pin       // UART Transmit
+    input clk,       
+    input morse_in,   
+    input btn_space,  
+    input btn_newline,
+    output tx_pin    
 );
 
     // --- Reset Logic ---
@@ -61,9 +60,6 @@ module top(
         .btn_out(btn_newline_clean)
     );
     
-    // --- NEW: Mutually Exclusive Button Logic ---
-    // Note: Buttons are active-LOW (1=off, 0=on)
-    
     wire btn3_pressed = !btn_space_clean;
     wire btn4_pressed = !btn_newline_clean;
     
@@ -79,10 +75,6 @@ module top(
         btn4_prev <= btn4_pressed;
     end
     
-    // Logic:
-    // Backspace = Hold 3, Press 4 (Press 4 *while* 3 is already pressed)
-    // Space = Press 3 only (Press 3 *while* 4 is NOT pressed)
-    // Newline = Press 4 only (Press 4 *while* 3 is NOT pressed)
     
     wire manual_backspace_press;
     wire manual_space_press;
@@ -164,5 +156,6 @@ module top(
         .tx_pin(tx_pin),
         .busy(uart_busy)
     );
+
 
 endmodule
