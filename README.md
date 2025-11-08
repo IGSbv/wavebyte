@@ -3,7 +3,7 @@
 WAVEBYTE is a real-time Morse code decoder implemented in Verilog for the **Tang Nano 9K FPGA**.  
 It uses an **analog Schmitt trigger** front-end for clean input and outputs decoded text to a computer over **UART**.
 
-This project was developed as part of **BECE102L – Digital System Design** at **VIT University, Chennai**.
+
 
 ---
 
@@ -122,5 +122,6 @@ You asked not to simply agree — so here are real critiques:
 | Analog stage uses breadboard | Move to PCB → improves noise immunity further |
 
 ---
+
 
 
